@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Handlebars from 'handlebars'
+import './css.css'
 
 class WeatherHere extends React.Component {
     constructor(props) {
@@ -38,7 +39,8 @@ class WeatherHere extends React.Component {
                 lon: this.state.lon,
                 lang: "ru",
                 units: "metric",
-                appid: "0ac7d7dab1b739b93bac5463c7dcb79d"
+                appid: "0ac7d7dab1b739b93bac5463c7dcb79d",
+                timeout: 1000
             }
         })
             .then(response => {
@@ -52,15 +54,16 @@ class WeatherHere extends React.Component {
                 document.getElementsByClassName("entry")[0].innerHTML = template(response.data);
             })
             .catch(error => {
-                document.getElementsByClassName("weather_here")[0].innerHTML = error.response.data.message;
+
             });
     }
 
     render() {
         return (
             <div className="weather_here">
-                <button onClick={this.getLocation.bind(this)}>Обновить геолокацию</button>
-                <div className="city">Loading...</div>
+                <div className="weather">Погода здесь</div>
+                <button className="button" onClick={this.getLocation.bind(this)}>Обновить геолокацию</button>
+                <b className="city">Loading...</b>
                 <img className="icon" alt="Loading..."/>
                 <div className="temp">Loading...</div>
                 <div className="entry">Loading...</div>

@@ -5,6 +5,7 @@ import reducer from './reducers'
 import WeatherHere from './WeatherHere';
 import Items from './Items';
 
+
 ReactDOM.render(
     <WeatherHere />,
     document.getElementById('geo')
@@ -27,6 +28,5 @@ const render = () => ReactDOM.render(
 render();
 store.subscribe(() => {
     localStorage.setItem('state', JSON.stringify(store.getState()));
-    render();
 });
 

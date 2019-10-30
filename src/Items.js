@@ -56,6 +56,7 @@ class Items extends React.Component {
             }
         })
             .then(response => {
+
                 let sourceItem = document.getElementById("item-template").innerHTML;
                 let templateItem = Handlebars.compile(sourceItem);
 
@@ -71,7 +72,7 @@ class Items extends React.Component {
 
                 if (error.response) {
                     if (error.response.status === 404) {
-                        errorStr = "Город " + name + " не найден"
+                        errorStr = "Город не найден"
                     } else {
                         errorStr = "Проблемы с сервером"
                     }
@@ -90,10 +91,14 @@ class Items extends React.Component {
     render() {
         return (
             <div className="container">
-                <form onSubmit={this.addItem.bind(this)}>
-                    <input name="city" type="text" placeholder="Введите название города..."/>
-                    <button type="submit">+</button>
-                </form>
+                <div className="favourites">
+                    <div className="weather">Избранное</div>
+
+                    <form onSubmit={this.addItem.bind(this)}>
+                        <input name="city" type="text" placeholder="Введите название города..."/>
+                        <button className="itemsButton" type="submit">+</button>
+                    </form>
+                </div>
 
                 <div className="items"></div>
             </div>

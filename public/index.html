@@ -41,10 +41,23 @@
       </ul>
     </template>
 
+    <template id="geo-loading-template">
+      <p>Loading...</p>
+    </template>
+
+    <template id="geo-item-template">
+      <b class="city"></b>
+      <img class="icon" alt=""/>
+      <div class="temp"></div>
+      <div class="entry"></div>
+    </template>
+
+    </templateid>
+
     <template id="loading-template">
       <div class="item">
         <b>{{name}}</b>
-        <button>x</button>
+        <button class="itemsButton" >x</button>
         <span>Loading...</span>
       </div>
     </template>
@@ -54,10 +67,12 @@
     </template>
 
     <template id="item-template">
-        <b>{{name}}</b>
-        <span>{{main.temp}} &degC</span>
-        <img src="//openweathermap.org/img/wn/{{#weather}}{{description}}{{/weather}}@2x.png" alt="img"/>
-        <button id="delete">x</button>
+        <p class="row">
+          <b>{{name}}</b>
+          <span class="item-temp">{{main.temp}} &degC</span>
+          <img class="item-icon" src='//openweathermap.org/img/wn/{{#weather}}{{icon}}{{/weather}}@2x.png' alt="img"/>
+          <button class="itemsButton" id="delete">x</button>
+        </p>
         <div class="item-entry">
           <ul>
             <li><span>Ветер</span> <em>{{wind.speed}} м/c</em></li>
