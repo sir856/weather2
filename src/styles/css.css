@@ -1,38 +1,37 @@
 .weather_here {
     margin: 0 auto;
-    display: grid;
+    display: flex;
     width: 830px;
-    height: 230px;
-    justify-items: flex-start;
+    justify-content: flex-start;
     align-items: center;
-    align-content: space-between;
-    grid-template-columns: 200px 200px 400px;
-    grid-template-rows: 40px 30px 130px;
-    grid-template-areas:
-            "h button button"
-            "city city entry"
-            "icon temp entry";
+    flex-direction: column;
 }
 
-.weather {
-    grid-area: h;
-    font-size: 20pt;
+.about {
+    display: grid;
+    width: 380px;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-areas:
+            "name name"
+            "icon temp";
+}
+
+.name {
+    grid-area: name;
 }
 
 .button {
-    margin-left: 100px;
     background-color: darkgrey;
     border: 1px solid darkgrey;
     color: lightgrey;
     border-radius: 6px;
     width: 200px;
     height: 40px;
-    grid-area: button;
 }
 
-b {
+b, .part {
     font-size: 20pt;
-    grid-area: city;
 }
 
 .temp{
@@ -41,14 +40,10 @@ b {
 }
 
 .icon{
-    height: 160px;
     grid-area: icon;
 }
 
-.entry{
-    margin-left: 30px;
-    grid-area: entry;
-}
+
 
 ul {
     padding-left: 0;
@@ -62,25 +57,33 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 25px;
-    margin-bottom: 7px;
+    height: 27px;
+    margin-bottom: 8px;
     width: 380px;
     color: cornsilk;
     background-color: dimgray;
 }
 
-#items {
-    margin-top: 30px;
-}
-
 .container {
     width: 830px;
-    margin: 0 auto;
+    margin: 30px auto;
 }
 
-.favourites {
-    display: flex;
-    justify-content: space-between;
+.header, .weather_here_item {
+     display: flex;
+     width: 100%;
+     margin-bottom: 10px;
+
+     justify-content: space-between;
+}
+
+.header {
+    align-items: center;
+    height: 50px;
+}
+
+.weather_here_item {
+    align-items: stretch;
 }
 
 input {
@@ -106,19 +109,22 @@ input {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 830px;
+    margin-top: 20px;
 }
 
 .item-icon {
     height: 50px;
 }
 
-.row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.loading-icon {
+    margin-top: 30px;
+    width: 50%;
 }
 
-.item {
+.loader {
     margin-bottom: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

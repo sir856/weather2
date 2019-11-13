@@ -28,61 +28,9 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id = "geo"> </div>
-    <div id = "items"></div>
+    <div id = "root"> </div>
+<!--    <div id = "items"></div>-->
 
-    <template id="entry-template">
-      <ul>
-        <li><span>Ветер</span> <em>{{wind.speed}} м/c</em></li>
-        <li><span>Облачность</span> <em>{{#weather}}{{description}}{{/weather}}</em></li>
-        <li><span>Давление</span> <em>{{main.pressure}} гПа</em></li>
-        <li><span>Влажность</span> <em>{{main.humidity}} %</em></li>
-        <li><span>Координаты</span> <em>[{{coord.lon}}, {{coord.lat}}]</em></li>
-      </ul>
-    </template>
-
-    <template id="geo-loading-template">
-      <p>Loading...</p>
-    </template>
-
-    <template id="geo-item-template">
-      <b class="city"></b>
-      <img class="icon" alt=""/>
-      <div class="temp"></div>
-      <div class="entry"></div>
-    </template>
-
-    </templateid>
-
-    <template id="loading-template">
-      <div class="item">
-        <b>{{name}}</b>
-        <button class="itemsButton" >x</button>
-        <span>Loading...</span>
-      </div>
-    </template>
-
-    <template id="error-template">
-      <p>{{error}}</p>
-    </template>
-
-    <template id="item-template">
-        <p class="row">
-          <b>{{name}}</b>
-          <span class="item-temp">{{main.temp}} &degC</span>
-          <img class="item-icon" src='//openweathermap.org/img/wn/{{#weather}}{{icon}}{{/weather}}@2x.png' alt="img"/>
-          <button class="itemsButton" id="delete">x</button>
-        </p>
-        <div class="item-entry">
-          <ul>
-            <li><span>Ветер</span> <em>{{wind.speed}} м/c</em></li>
-            <li><span>Облачность</span> <em>{{#weather}}{{description}}{{/weather}}</em></li>
-            <li><span>Давление</span> <em>{{main.pressure}} гПа</em></li>
-            <li><span>Влажность</span> <em>{{main.humidity}} %</em></li>
-            <li><span>Координаты</span> <em>[{{coord.lon}}, {{coord.lat}}]</em></li>
-          </ul>
-        </div>
-    </template>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

@@ -8,11 +8,9 @@ export default (state = [], action) => {
                 }
             ];
         case 'DELETE':
-            let item = state.filter(item => {
+            return state.filter(item => {
                 return item.name !== action.name;
             });
-            state = item;
-            return state;
         default:
             return state;
     }
