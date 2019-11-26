@@ -1,9 +1,11 @@
 import React from 'react'
-import {deleteCity} from '../store/action/actionCreator'
+import {deleteCity} from '../../store/action/actionCreator'
 import {connect} from 'react-redux';
 import axios from 'axios/index';
-import Loader from './Loader';
-import Error from "./Error";
+import Loader from '../loader/Loader';
+import Error from "../error/Error";
+import Weather from "../weather/Weather"
+import './FavouriteCity.css'
 
 class FavouriteCity extends React.Component {
     constructor(props) {
@@ -11,7 +13,7 @@ class FavouriteCity extends React.Component {
 
         this.state = {
             data: {},
-            loading: true
+            loading: true,
         }
     }
 
@@ -21,8 +23,7 @@ class FavouriteCity extends React.Component {
                 q: this.props.name,
                 lang: "ru",
                 units: "metric",
-                appid: "3494b8f1c8f596aee028c113d9cf5e78",
-                timeout: 1000
+                appid: "3494b8f1c8f596aee028c113d9cf5e78"
             }
         })
             .then(response => {
@@ -32,12 +33,13 @@ class FavouriteCity extends React.Component {
                 });
             })
             .catch(error => {
-                console.error(error);
 
                 let msg = "Проблемы с интернет соединением";
                 if (error.response) {
                     if (error.response.status === 404) {
-                        msg = "Город не найден"
+                        this.props.deleteCity(this.props.name);
+                        this.props.cityNotFound(this.props.name);
+                        return
                     } else {
                         msg = "Проблемы с сервером"
                     }
@@ -47,7 +49,8 @@ class FavouriteCity extends React.Component {
                     data: msg,
                     loading: false,
                     error: true
-                })
+                });
+
             });
     }
 
@@ -77,13 +80,7 @@ class FavouriteCity extends React.Component {
                         <button className="itemsButton" id="delete" onClick={this.delete.bind(this)}>x</button>
                     </div>
                     <div className="item-entry">
-                        <ul>
-                            <li><span>Ветер</span> <em>{this.state.data.wind.speed} м/c</em></li>
-                            <li><span>Облачность</span> <em>{this.state.data.weather[0].description}</em></li>
-                            <li><span>Давление</span> <em>{this.state.data.main.pressure} гПа</em></li>
-                            <li><span>Влажность</span> <em>{this.state.data.main.humidity} %</em></li>
-                            <li><span>Координаты</span> <em>[{this.state.data.coord.lon}, {this.state.data.coord.lat}]</em></li>
-                        </ul>
+                        <Weather data={this.state.data}/>
                     </div>
                 </div>
             );

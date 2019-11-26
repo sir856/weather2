@@ -1,9 +1,11 @@
 import React from 'react'
 import axios from 'axios/index';
-import Loader from './Loader';
-import Error from "./Error";
+import Loader from '../loader/Loader';
+import Error from "../error/Error";
+import Weather from "../weather/Weather";
+import "./City.css";
 
-class City extends React.Component {
+export default class City extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,6 +22,10 @@ class City extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
+            this.setState({
+                loading: true,
+                error: false
+            });
             this.getData();
         }
 
@@ -85,13 +91,7 @@ class City extends React.Component {
                              alt="img"/>
                     </div>
                     <div className="entry">
-                        <ul>
-                            <li><span>Ветер</span> <em>{this.state.data.wind.speed} м/c</em></li>
-                            <li><span>Облачность</span> <em>{this.state.data.weather[0].description}</em></li>
-                            <li><span>Давление</span> <em>{this.state.data.main.pressure} гПа</em></li>
-                            <li><span>Влажность</span> <em>{this.state.data.main.humidity} %</em></li>
-                            <li><span>Координаты</span> <em>[{this.state.data.coord.lon}, {this.state.data.coord.lat}]</em></li>
-                        </ul>
+                        <Weather data={this.state.data}/>
                     </div>
                 </div>
             );
@@ -99,5 +99,3 @@ class City extends React.Component {
 
     }
 }
-
-export default City;

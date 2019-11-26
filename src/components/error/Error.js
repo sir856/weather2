@@ -1,6 +1,7 @@
 import React from "react";
+import './Error.css'
 
-class Error extends React.Component {
+export default class Error extends React.Component {
     render() {
         if (this.props.delete) {
             return (
@@ -21,5 +22,3 @@ class Error extends React.Component {
         );
     }
 }
-
-export default Error;

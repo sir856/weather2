@@ -1,9 +1,9 @@
 import React from 'react'
-import '../styles/css.css'
-import City from "./City";
-import FavouriteCityList from "./FavouriteCityList";
+import './WeatherHere.css'
+import City from "../city/City";
+import FavouriteCityList from "../favouriteCityList/FavouriteCityList";
 
-class WeatherHere extends React.Component {
+export default class WeatherHere extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,6 +45,3 @@ class WeatherHere extends React.Component {
         );
     }
 }
-
-export default WeatherHere;
-
