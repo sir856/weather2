@@ -12,10 +12,20 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
   },
+  "devDependencies": {
+    "@babel/polyfill": "^7.7.0",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "jest": "^24.9.0",
+    "react-test-renderer": "^16.12.0",
+    "style-loader": "^1.0.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -33,7 +43,10 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "style-loader": "^1.0.0"
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileMock.js",
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
   }
 }

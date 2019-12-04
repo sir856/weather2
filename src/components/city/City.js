@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios/index';
 import Loader from '../loader/Loader';
 import Error from "../error/Error";
 import Weather from "../weather/Weather";
@@ -32,8 +31,7 @@ export default class City extends React.Component {
     }
 
     getData() {
-        console.log(this.props.lat, this.props.lon);
-        axios.get("http://api.openweathermap.org/data/2.5/weather", {
+        this.props.axios.get("http://api.openweathermap.org/data/2.5/weather", {
             params: {
                 lat: this.props.lat,
                 lon: this.props.lon,
@@ -51,11 +49,10 @@ export default class City extends React.Component {
                 })
             })
             .catch(error => {
-                console.error(error);
 
                 let msg = "Проблемы с интернет соединением";
                 if (error.response) {
-                    if (error.status === 404) {
+                    if (error.response.status === 404) {
                         msg = "Город не найден"
                     } else {
                         msg = "Проблемы с сервером"

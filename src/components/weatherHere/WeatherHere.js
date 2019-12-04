@@ -1,7 +1,7 @@
 import React from 'react'
 import './WeatherHere.css'
-import City from "../city/City";
-import FavouriteCityList from "../favouriteCityList/FavouriteCityList";
+import City from "../city/City"
+import FavouriteCityList from "../favouriteCityList/FavouriteCityList"
 
 export default class WeatherHere extends React.Component {
     constructor(props) {
@@ -37,10 +37,10 @@ export default class WeatherHere extends React.Component {
                         <div className="part">Погода здесь</div>
                         <button className="button" onClick={this.getLocation.bind(this)}>Обновить геолокацию</button>
                     </div>
-                    <City lat={this.state.lat} lon={this.state.lon}/>
+                    <City axios={this.props.axios} lat={this.state.lat} lon={this.state.lon}/>
                 </div>
 
-                <FavouriteCityList/>
+                <FavouriteCityList axios={this.props.axios}/>
             </div>
         );
     }

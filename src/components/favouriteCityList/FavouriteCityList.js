@@ -17,7 +17,7 @@ class FavouriteCityList extends React.Component {
 
     addItem(event) {
         let name = event.target['city'].value;
-        name = name.charAt(0).toUpperCase() + name.slice(1);
+        name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
         console.log(name);
         console.log(this.props.items);
@@ -35,7 +35,7 @@ class FavouriteCityList extends React.Component {
     getItems() {
         let items = [];
         this.props.items.forEach(item => {
-            items.push(<FavouriteCity key={item.name} name={item.name} cityNotFound={this.cityNotFound.bind(this)}/>);
+            items.push(<FavouriteCity key={item.name} name={item.name} cityNotFound={this.cityNotFound.bind(this)} axios={this.props.axios}/>);
         });
         if (this.state.notFoundItem !== "") {
             items.push(<Error key={this.state.notFoundItem} message={"Город " + this.state.notFoundItem + " не найден"}/>);

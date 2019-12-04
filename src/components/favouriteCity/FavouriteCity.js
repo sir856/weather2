@@ -1,7 +1,6 @@
 import React from 'react'
 import {deleteCity} from '../../store/action/actionCreator'
 import {connect} from 'react-redux';
-import axios from 'axios/index';
 import Loader from '../loader/Loader';
 import Error from "../error/Error";
 import Weather from "../weather/Weather"
@@ -18,7 +17,7 @@ class FavouriteCity extends React.Component {
     }
 
     componentDidMount() {
-        axios.get("http://api.openweathermap.org/data/2.5/weather", {
+        this.props.axios.get("http://api.openweathermap.org/data/2.5/weather", {
             params: {
                 q: this.props.name,
                 lang: "ru",
