@@ -1,7 +1,11 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import City from '../components/city/City'
 import '@babel/polyfill'
+import {applyMiddleware, createStore} from "redux";
+import reducer from "../store/reducers/reducer";
+import thunk from "redux-thunk";
+import {Provider} from "react-redux";
+import WeatherHere from "../components/weatherHere/WeatherHere";
 
 const {act} = renderer;
 
@@ -53,104 +57,76 @@ const get = (url, params) => {
     );
 };
 
+let store;
 
-it('City rendering', async () => {
+beforeEach( ()=> {
+    let persistedState = [{ name: "moscow"}, {name: "omsk"}];
+    store = createStore(reducer, persistedState, applyMiddleware(thunk));
+});
+
+it('Weather here rendering', async () => {
     let axios = {
         get: get
     };
 
-    let component = await renderer.create(
-        <City axios={axios} lat={123} lon={76}/>
-    );
+    let navigator = {
+        geolocation: {
+            getCurrentPosition: (success, error) => {
+                let position = {
+                    coords: {
+                        latitude: 123,
+                        longitude: 321
+                    }
+                };
 
-
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot()
-
-
-});
-
-it('City rendering server error', async () => {
-    let axios = {
-        get: (url, params) => {
-            return Promise.reject({
-                response: {
-                    status: 400
-                }
-            })
+                success(position)
+            }
         }
-    };
-
-    let component = renderer.create(<div></div>);
-
-    await act(() => {
-        component = renderer.create(
-            <City axios={axios} lat={213} lon={345}/>
-        );
-    });
-
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot()
-});
-
-it('City rendering not found error', async () => {
-    let axios = {
-        get: (url, params) => {
-            return Promise.reject({
-                response: {
-                    status: 404
-                }
-            })
-        }
-    };
-
-    let component = renderer.create(<div></div>);
-
-    await act(() => {
-        component = renderer.create(
-            <City axios={axios} lat={213} lon={345}/>
-        );
-    });
-
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot()
-});
-
-it('City rendering network error', async () => {
-    let axios = {
-        get: (url, params) => {
-            return Promise.reject({
-                response: null
-            })
-        }
-    };
-
-    let component = renderer.create(<div></div>);
-
-    await act(() => {
-        component = renderer.create(
-            <City axios={axios} lat={213} lon={345}/>
-        );
-    });
-
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot()
-
-
-});
-
-it('City rendering loading', () => {
-    let axios = {
-        get: get
     };
 
     let component = renderer.create(
-        <City axios={axios} lat={0} lon={0}/>
+        <div></div>
     );
+
+    await act(() => {
+        component = renderer.create(
+            <Provider store={store}>
+                <WeatherHere axios={axios} navigator={navigator}/>
+            </Provider>
+        );
+    });
 
 
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot()
+});
+
+it('Weather here rendering position error', async () => {
+    let axios = {
+        get: get
+    };
+
+    let navigator = {
+        geolocation: {
+            getCurrentPosition: (success, error) => {
+                error()
+            }
+        }
+    };
+
+    let component = renderer.create(
+        <div></div>
+    );
+
+    await act(() => {
+        component = renderer.create(
+            <Provider store={store}>
+                <WeatherHere axios={axios} navigator={navigator}/>
+            </Provider>
+        );
+    });
 
 
+    let tree = component.toJSON();
+    expect(tree).toMatchSnapshot()
 });

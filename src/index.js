@@ -8,7 +8,7 @@ import {Provider} from "react-redux"
 
 ReactDOM.render(
     <Provider store={store}>
-        <WeatherHere axios={axios} />
+        <WeatherHere axios={axios} navigator={navigator} />
     </Provider>,
     document.getElementById('root')
 );

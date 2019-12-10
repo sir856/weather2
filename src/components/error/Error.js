@@ -8,7 +8,7 @@ export default class Error extends React.Component {
                 <div className='loader'>
                     <div className="header">
                         <b>{this.props.name}</b>
-                        <button className="itemsButton" id="delete" onClick={this.props.delete}>x</button>
+                        <button className="itemsButton" id={this.props.name} onClick={this.props.delete}>x</button>
                     </div>
                     <i>{this.props.message}</i>
                 </div>

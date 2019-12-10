@@ -17,7 +17,7 @@ export default class WeatherHere extends React.Component {
     }
 
     getLocation() {
-        navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error.bind(this));
+        this.props.navigator.geolocation.getCurrentPosition(this.success.bind(this), this.error.bind(this));
     }
 
     error(){

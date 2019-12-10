@@ -72,11 +72,11 @@ class FavouriteCity extends React.Component {
             return(
                 <div className="loader" >
                     <div className="header">
-                        <b>{this.state.data.name}</b>
+                        <b>{this.props.name}</b>
                         <span className="item-temp">{this.state.data.main.temp + " \u2103"}</span>
                         <img className="item-icon" src={'//openweathermap.org/img/wn/' + this.state.data.weather[0].icon + '@2x.png'}
                              alt="img"/>
-                        <button className="itemsButton" id="delete" onClick={this.delete.bind(this)}>x</button>
+                        <button className="itemsButton" id={this.props.name} onClick={this.delete.bind(this)}>x</button>
                     </div>
                     <div className="item-entry">
                         <Weather data={this.state.data}/>
