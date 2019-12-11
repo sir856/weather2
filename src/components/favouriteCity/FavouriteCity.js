@@ -1,5 +1,6 @@
 import React from 'react'
 import {deleteCity} from '../../store/action/actionCreator'
+import {getByName} from "../../store/action/actionCreator";
 import {connect} from 'react-redux';
 import Loader from '../loader/Loader';
 import Error from "../error/Error";
@@ -13,44 +14,47 @@ class FavouriteCity extends React.Component {
         this.state = {
             data: {},
             loading: true,
+            loadState: props.loadState
         }
     }
 
     componentDidMount() {
-        this.props.axios.get("http://api.openweathermap.org/data/2.5/weather", {
-            params: {
-                q: this.props.name,
-                lang: "ru",
-                units: "metric",
-                appid: "3494b8f1c8f596aee028c113d9cf5e78"
-            }
+        if (!this.state.loadState) {
+            this.getData();
+        }
+
+    }
+
+    toResponse(response) {
+        this.setState({
+            data: response.data,
+            loading: false,
         })
-            .then(response => {
-                this.setState({
-                    data: response.data,
-                    loading: false,
-                });
-            })
-            .catch(error => {
+    }
 
-                let msg = "Проблемы с интернет соединением";
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        this.props.deleteCity(this.props.name);
-                        this.props.cityNotFound(this.props.name);
-                        return
-                    } else {
-                        msg = "Проблемы с сервером"
-                    }
-                }
+    toError(error) {
+        let msg = "Проблемы с интернет соединением";
+        if (error.response) {
+            if (error.response.status === 404) {
+                this.props.deleteCity(this.props.name);
+                this.props.cityNotFound(this.props.name);
+                return
+            } else {
+                msg = "Проблемы с сервером"
+            }
+        }
 
-                this.setState({
-                    data: msg,
-                    loading: false,
-                    error: true
-                });
+        this.setState({
+            data: msg,
+            loading: false,
+            error: true
+        });
+    }
 
-            });
+    getData() {
+        getByName(this.props.name,
+            this.toResponse.bind(this),
+            this.toError.bind(this));
     }
 
     delete() {
@@ -88,4 +92,4 @@ class FavouriteCity extends React.Component {
     }
 }
 
-export default connect(null, {deleteCity})(FavouriteCity);
+export default connect(null, {deleteCity, getByName})(FavouriteCity);

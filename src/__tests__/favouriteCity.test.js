@@ -93,7 +93,7 @@ it('Favourite city rendering loading', () => {
 
     let component = renderer.create(
         <Provider store={store}>
-            <FavouriteCity axios={axios} name={"omsk"}/>
+            <FavouriteCity axios={axios} name={"omsk"} loadState={true}/>
         </Provider>
     );
 

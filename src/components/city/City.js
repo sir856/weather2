@@ -3,8 +3,10 @@ import Loader from '../loader/Loader';
 import Error from "../error/Error";
 import Weather from "../weather/Weather";
 import "./City.css";
+import {connect} from "react-redux";
+import {getByCoords} from "../../store/action/actionCreator";
 
-export default class City extends React.Component {
+class City extends React.Component {
     constructor(props) {
         super(props);
 
@@ -30,41 +32,36 @@ export default class City extends React.Component {
 
     }
 
-    getData() {
-        this.props.axios.get("http://api.openweathermap.org/data/2.5/weather", {
-            params: {
-                lat: this.props.lat,
-                lon: this.props.lon,
-                lang: "ru",
-                units: "metric",
-                appid: "3494b8f1c8f596aee028c113d9cf5e78",
-                timeout: 1000
-            }
+    toResponse(response) {
+        this.setState({
+            data: response.data,
+            loading: false,
+            error: false
         })
-            .then(response => {
-                this.setState({
-                    data: response.data,
-                    loading: false,
-                    error: false
-                })
-            })
-            .catch(error => {
+    }
 
-                let msg = "Проблемы с интернет соединением";
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        msg = "Город не найден"
-                    } else {
-                        msg = "Проблемы с сервером"
-                    }
-                }
+    toError(error) {
+        let msg = "Проблемы с интернет соединением";
+        if (error.response) {
+            if (error.response.status === 404) {
+                msg = "Город не найден"
+            } else {
+                msg = "Проблемы с сервером"
+            }
+        }
 
-                this.setState({
-                    data: msg,
-                    loading: false,
-                    error: true
-                })
-            });
+        this.setState({
+            data: msg,
+            loading: false,
+            error: true
+        })
+    }
+
+    getData() {
+        getByCoords({
+            lat: this.props.lat,
+            lon: this.props.lon
+        }, this.toResponse.bind(this), this.toError.bind(this));
     }
 
     render() {
@@ -96,3 +93,5 @@ export default class City extends React.Component {
 
     }
 }
+
+export default connect(null, {getByCoords})(City);
